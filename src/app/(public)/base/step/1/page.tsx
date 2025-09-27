@@ -25,6 +25,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CodeIcon from "@mui/icons-material/Code";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { CodeHighlight } from "@/components/CodeHighlight";
 
 const steps = [
   "基本的なregister",
@@ -32,6 +33,25 @@ const steps = [
   "エラーハンドリング",
   "完全なフォーム",
 ];
+
+const traditionalReactCode = `const [name, setName] = useState("");
+const [errors, setErrors] = useState({});
+
+const handleChange = (e) => {
+  setName(e.target.value);
+  // バリデーションロジック...
+}
+
+<input
+  value={name}
+  onChange={handleChange}
+/>`;
+
+const reactHookFormCode = `const { register } = useForm();
+
+// これだけ！ 🎉
+
+<input {...register('name')} />`;
 
 interface FormData {
   firstName: string;
@@ -104,168 +124,22 @@ export default function RegisterBasicsPage() {
               <Typography variant="h6" sx={{ color: "#f87171", mb: 1 }}>
                 😵 従来のReact
               </Typography>
-              <Paper
-                sx={{
-                  p: 2,
-                  bgcolor: "#1e1e1e",
-                  border: "1px solid #374151",
-                  borderRadius: 2,
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "monospace",
-                    fontSize: "0.8rem",
-                    color: "#e5e7eb",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    const
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#60a5fa" }}>
-                    [name, setName]
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    =
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#fbbf24" }}>
-                    useState
-                  </Box>
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    ("");
-                  </Box>
-                  <br />
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    const
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#60a5fa" }}>
-                    [errors, setErrors]
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    =
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#fbbf24" }}>
-                    useState
-                  </Box>
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    ({"{}"})
-                  </Box>
-                  <br />
-                  <br />
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    const
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#fbbf24" }}>
-                    handleChange
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    =
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    (e) =&gt; {"{"}
-                  </Box>
-                  <br />
-                  {"  "}
-                  <Box component="span" sx={{ color: "#fbbf24" }}>
-                    setName
-                  </Box>
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    (e.target.value);
-                  </Box>
-                  <br />
-                  {"  "}
-                  <Box component="span" sx={{ color: "#6b7280" }}>
-                    // バリデーションロジック...
-                  </Box>
-                  <br />
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    {"}"}
-                  </Box>
-                  <br />
-                  <br />
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    &lt;input
-                  </Box>
-                  <br />
-                  {"  "}
-                  <Box component="span" sx={{ color: "#60a5fa" }}>
-                    value
-                  </Box>
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    ={"{"}name{"}"}
-                  </Box>
-                  <br />
-                  {"  "}
-                  <Box component="span" sx={{ color: "#60a5fa" }}>
-                    onChange
-                  </Box>
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    ={"{"}handleChange{"}"}
-                  </Box>
-                  <br />
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    /&gt;
-                  </Box>
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={traditionalReactCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography variant="h6" sx={{ color: "#34d399", mb: 1 }}>
                 ✨ React Hook Form
               </Typography>
-              <Paper
-                sx={{
-                  p: 2,
-                  bgcolor: "#1e1e1e",
-                  border: "1px solid #374151",
-                  borderRadius: 2,
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "monospace",
-                    fontSize: "0.8rem",
-                    color: "#e5e7eb",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    const
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    {"{"}
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#60a5fa" }}>
-                    register
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    {"}"}
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#c084fc" }}>
-                    =
-                  </Box>{" "}
-                  <Box component="span" sx={{ color: "#fbbf24" }}>
-                    useForm
-                  </Box>
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    ();
-                  </Box>
-                  <br />
-                  <br />
-                  <Box component="span" sx={{ color: "#6b7280" }}>
-                    // これだけ！ 🎉
-                  </Box>
-                  <br />
-                  <br />
-                  <Box component="span" sx={{ color: "#9ca3af" }}>
-                    &lt;input {"{"}...register('name'){"}"} /&gt;
-                  </Box>
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={reactHookFormCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </Grid>
           </Grid>
 
