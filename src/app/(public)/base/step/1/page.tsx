@@ -25,6 +25,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CodeIcon from "@mui/icons-material/Code";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { CodeHighlight } from "@/components/CodeHighlight";
+import VStack from "@/components/layout/v-stack";
+import HStack from "@/components/layout/h-stack";
 
 const steps = [
   "基本的なregister",
@@ -232,14 +234,14 @@ export default function RegisterBasicsPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* ページヘッダー */}
-      <Box sx={{ mb: 4 }}>
+      <VStack spacing={1} sx={{ mb: 4 }}>
         <Typography variant="h3" component="h1" gutterBottom>
           React Hook Form - register API の基本
         </Typography>
         <Typography variant="h6" color="text.secondary">
           フォームフィールドを登録して、バリデーションとエラーハンドリングを学びましょう
         </Typography>
-      </Box>
+      </VStack>
 
       {/* 導入セクション */}
       <Card sx={{ mb: 4 }}>
@@ -294,12 +296,12 @@ export default function RegisterBasicsPage() {
             }}
           >
             <Typography variant="body2" sx={{ color: "#e5e7eb" }}>
-              <Box
+              <Typography
                 component="span"
                 sx={{ color: "#34d399", fontWeight: "bold" }}
               >
                 🚀 圧倒的な効果:
-              </Box>
+              </Typography>
               <br />• <strong>コード量:</strong> 約80行 → 30行（62%削減）
               <br />• <strong>バリデーション:</strong> 手動実装 → 宣言的設定
               <br />• <strong>エラー管理:</strong> 複雑なstate管理 → 自動処理
@@ -329,21 +331,19 @@ export default function RegisterBasicsPage() {
 
           <Box sx={{ minHeight: 400 }}>
             {activeStep === 0 && (
-              <Box>
+              <VStack spacing={2}>
                 <Typography variant="h6" gutterBottom>
                   Step 1: 基本的なregister
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1">
                   最もシンプルなregisterの使い方です。フィールド名を指定するだけで、入力値が自動的に管理されます。
                 </Typography>
-                <Box sx={{ mb: 2 }}>
-                  <CodeHighlight
-                    code={step1Code}
-                    language="jsx"
-                    theme="dark-plus"
-                    title="基本的なregister"
-                  />
-                </Box>
+                <CodeHighlight
+                  code={step1Code}
+                  language="jsx"
+                  theme="dark-plus"
+                  title="基本的なregister"
+                />
                 <Box
                   sx={{
                     p: 2,
@@ -360,25 +360,23 @@ export default function RegisterBasicsPage() {
                     placeholder="山田"
                   />
                 </Box>
-              </Box>
+              </VStack>
             )}
 
             {activeStep === 1 && (
-              <Box>
+              <VStack spacing={2}>
                 <Typography variant="h6" gutterBottom>
                   Step 2: バリデーション追加
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1">
                   registerの第2引数にバリデーションルールを指定できます。
                 </Typography>
-                <Box sx={{ mb: 2 }}>
-                  <CodeHighlight
-                    code={step2Code}
-                    language="jsx"
-                    theme="dark-plus"
-                    title="バリデーション追加"
-                  />
-                </Box>
+                <CodeHighlight
+                  code={step2Code}
+                  language="jsx"
+                  theme="dark-plus"
+                  title="バリデーション追加"
+                />
                 <Box
                   sx={{
                     p: 2,
@@ -397,25 +395,23 @@ export default function RegisterBasicsPage() {
                     helperText={errors.lastName?.message}
                   />
                 </Box>
-              </Box>
+              </VStack>
             )}
 
             {activeStep === 2 && (
-              <Box>
+              <VStack spacing={2}>
                 <Typography variant="h6" gutterBottom>
                   Step 3: エラーハンドリング
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1">
                   errorsオブジェクトを使って、バリデーションエラーを表示します。
                 </Typography>
-                <Box sx={{ mb: 2 }}>
-                  <CodeHighlight
-                    code={step3Code}
-                    language="jsx"
-                    theme="dark-plus"
-                    title="エラーハンドリング"
-                  />
-                </Box>
+                <CodeHighlight
+                  code={step3Code}
+                  language="jsx"
+                  theme="dark-plus"
+                  title="エラーハンドリング"
+                />
                 <Box
                   sx={{
                     p: 2,
@@ -440,25 +436,23 @@ export default function RegisterBasicsPage() {
                     helperText={errors.email?.message}
                   />
                 </Box>
-              </Box>
+              </VStack>
             )}
 
             {activeStep === 3 && (
-              <Box>
+              <VStack spacing={2}>
                 <Typography variant="h6" gutterBottom>
                   Step 4: 完全なフォーム
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1">
                   handleSubmitと組み合わせて、完全なフォームを作成します。
                 </Typography>
-                <Box sx={{ mb: 2 }}>
-                  <CodeHighlight
-                    code={step4Code}
-                    language="jsx"
-                    theme="dark-plus"
-                    title="完全なフォーム"
-                  />
-                </Box>
+                <CodeHighlight
+                  code={step4Code}
+                  language="jsx"
+                  theme="dark-plus"
+                  title="完全なフォーム"
+                />
                 <Box
                   sx={{
                     p: 2,
@@ -518,16 +512,15 @@ export default function RegisterBasicsPage() {
                     </Grid>
                   </form>
                 </Box>
-              </Box>
+              </VStack>
             )}
           </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <HStack sx={{ pt: 2 }}>
             <Button
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
             >
               戻る
             </Button>
@@ -537,7 +530,7 @@ export default function RegisterBasicsPage() {
             ) : (
               <Button onClick={handleNext}>次へ</Button>
             )}
-          </Box>
+          </HStack>
         </CardContent>
       </Card>
 
@@ -553,22 +546,24 @@ export default function RegisterBasicsPage() {
               <Typography variant="h6">required - 必須入力</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ mb: 2 }}>
-                <Chip
-                  label="基本"
-                  color="primary"
-                  size="small"
-                  sx={{ mr: 1 }}
+              <VStack spacing={2}>
+                <VStack spacing={1}>
+                  <Chip
+                    label="基本"
+                    color="primary"
+                    size="small"
+                    sx={{ alignSelf: "flex-start" }}
+                  />
+                  <Typography variant="body2">
+                    フィールドが必須であることを指定します。
+                  </Typography>
+                </VStack>
+                <CodeHighlight
+                  code={requiredRuleCode}
+                  language="javascript"
+                  theme="dark-plus"
                 />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  フィールドが必須であることを指定します。
-                </Typography>
-              </Box>
-              <CodeHighlight
-                code={requiredRuleCode}
-                language="javascript"
-                theme="dark-plus"
-              />
+              </VStack>
             </AccordionDetails>
           </Accordion>
 
@@ -577,22 +572,24 @@ export default function RegisterBasicsPage() {
               <Typography variant="h6">pattern - 正規表現パターン</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ mb: 2 }}>
-                <Chip
-                  label="中級"
-                  color="secondary"
-                  size="small"
-                  sx={{ mr: 1 }}
+              <VStack spacing={2}>
+                <VStack spacing={1}>
+                  <Chip
+                    label="中級"
+                    color="secondary"
+                    size="small"
+                    sx={{ alignSelf: "flex-start" }}
+                  />
+                  <Typography variant="body2">
+                    入力値が指定した正規表現パターンに一致するかをチェックします。
+                  </Typography>
+                </VStack>
+                <CodeHighlight
+                  code={patternRuleCode}
+                  language="javascript"
+                  theme="dark-plus"
                 />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  入力値が指定した正規表現パターンに一致するかをチェックします。
-                </Typography>
-              </Box>
-              <CodeHighlight
-                code={patternRuleCode}
-                language="javascript"
-                theme="dark-plus"
-              />
+              </VStack>
             </AccordionDetails>
           </Accordion>
 
@@ -603,22 +600,24 @@ export default function RegisterBasicsPage() {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ mb: 2 }}>
-                <Chip
-                  label="基本"
-                  color="primary"
-                  size="small"
-                  sx={{ mr: 1 }}
+              <VStack spacing={2}>
+                <VStack spacing={1}>
+                  <Chip
+                    label="基本"
+                    color="primary"
+                    size="small"
+                    sx={{ alignSelf: "flex-start" }}
+                  />
+                  <Typography variant="body2">
+                    入力文字数の最小値・最大値を制限します。
+                  </Typography>
+                </VStack>
+                <CodeHighlight
+                  code={lengthRuleCode}
+                  language="javascript"
+                  theme="dark-plus"
                 />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  入力文字数の最小値・最大値を制限します。
-                </Typography>
-              </Box>
-              <CodeHighlight
-                code={lengthRuleCode}
-                language="javascript"
-                theme="dark-plus"
-              />
+              </VStack>
             </AccordionDetails>
           </Accordion>
 
@@ -627,22 +626,24 @@ export default function RegisterBasicsPage() {
               <Typography variant="h6">min / max - 数値範囲</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ mb: 2 }}>
-                <Chip
-                  label="基本"
-                  color="primary"
-                  size="small"
-                  sx={{ mr: 1 }}
+              <VStack spacing={2}>
+                <VStack spacing={1}>
+                  <Chip
+                    label="基本"
+                    color="primary"
+                    size="small"
+                    sx={{ alignSelf: "flex-start" }}
+                  />
+                  <Typography variant="body2">
+                    数値入力の最小値・最大値を制限します。
+                  </Typography>
+                </VStack>
+                <CodeHighlight
+                  code={numberRuleCode}
+                  language="javascript"
+                  theme="dark-plus"
                 />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  数値入力の最小値・最大値を制限します。
-                </Typography>
-              </Box>
-              <CodeHighlight
-                code={numberRuleCode}
-                language="javascript"
-                theme="dark-plus"
-              />
+              </VStack>
             </AccordionDetails>
           </Accordion>
         </CardContent>
@@ -661,16 +662,16 @@ export default function RegisterBasicsPage() {
           </Typography>
 
           <Alert severity="success" sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" gutterBottom>
-              ✅ registerの基本構文
-            </Typography>
-            <Box sx={{ mt: 1 }}>
+            <VStack spacing={1}>
+              <Typography variant="subtitle2" gutterBottom>
+                ✅ registerの基本構文
+              </Typography>
               <CodeHighlight
                 code={basicSyntaxCode}
                 language="jsx"
                 theme="dark-plus"
               />
-            </Box>
+            </VStack>
           </Alert>
 
           <Alert severity="warning" sx={{ mb: 2 }}>
