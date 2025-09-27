@@ -15,7 +15,6 @@ import {
   TextField,
   Alert,
   Grid,
-  Paper,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -52,6 +51,56 @@ const reactHookFormCode = `const { register } = useForm();
 // これだけ！ 🎉
 
 <input {...register('name')} />`;
+
+// ステップコード例
+const step1Code = `<input {...register('firstName')} />`;
+
+const step2Code = `<input {...register('lastName', { required: true })} />`;
+
+const step3Code = `{errors.lastName && <span>エラーメッセージ</span>}`;
+
+const step4Code = `<form onSubmit={handleSubmit(onSubmit)}>
+  <input {...register('firstName')} />
+  <input {...register('lastName', { required: '姓は必須です' })} />
+  {errors.lastName && <span>{errors.lastName.message}</span>}
+  <button type="submit">送信</button>
+</form>`;
+
+// バリデーションルールコード例
+const requiredRuleCode = `register('fieldName', { required: true })
+register('fieldName', { required: 'エラーメッセージ' })`;
+
+const patternRuleCode = `register('email', {
+  pattern: {
+    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,
+    message: 'メールアドレスの形式が正しくありません'
+  }
+})`;
+
+const lengthRuleCode = `register('password', {
+  minLength: {
+    value: 8,
+    message: 'パスワードは8文字以上で入力してください'
+  },
+  maxLength: {
+    value: 20,
+    message: 'パスワードは20文字以下で入力してください'
+  }
+})`;
+
+const numberRuleCode = `register('age', {
+  min: {
+    value: 18,
+    message: '18歳以上である必要があります'
+  },
+  max: {
+    value: 100,
+    message: '100歳以下で入力してください'
+  }
+})`;
+
+// 重要なポイントのコード例
+const basicSyntaxCode = `<input {...register('fieldName', validationRules)} />`;
 
 interface FormData {
   firstName: string;
@@ -121,10 +170,8 @@ export default function RegisterBasicsPage() {
 
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" sx={{ color: "#f87171", mb: 1 }}>
-                😵 従来のReact
-              </Typography>
               <CodeHighlight
+                title="😵 従来のReact"
                 code={traditionalReactCode}
                 language="javascript"
                 theme="dark-plus"
@@ -132,10 +179,8 @@ export default function RegisterBasicsPage() {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" sx={{ color: "#34d399", mb: 1 }}>
-                ✨ React Hook Form
-              </Typography>
               <CodeHighlight
+                title="😎 React Hook Form"
                 code={reactHookFormCode}
                 language="javascript"
                 theme="dark-plus"
@@ -191,14 +236,14 @@ export default function RegisterBasicsPage() {
                 <Typography variant="body1" sx={{ mb: 2 }}>
                   最もシンプルなregisterの使い方です。フィールド名を指定するだけで、入力値が自動的に管理されます。
                 </Typography>
-                <Paper sx={{ p: 2, bgcolor: "grey.50", mb: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontFamily: "monospace", mb: 1 }}
-                  >
-                    {"<input {...register('firstName')} />"}
-                  </Typography>
-                </Paper>
+                <Box sx={{ mb: 2 }}>
+                  <CodeHighlight
+                    code={step1Code}
+                    language="jsx"
+                    theme="dark-plus"
+                    title="基本的なregister"
+                  />
+                </Box>
                 <Box
                   sx={{
                     p: 2,
@@ -226,14 +271,14 @@ export default function RegisterBasicsPage() {
                 <Typography variant="body1" sx={{ mb: 2 }}>
                   registerの第2引数にバリデーションルールを指定できます。
                 </Typography>
-                <Paper sx={{ p: 2, bgcolor: "grey.50", mb: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontFamily: "monospace", mb: 1 }}
-                  >
-                    {"<input {...register('lastName', { required: true })} />"}
-                  </Typography>
-                </Paper>
+                <Box sx={{ mb: 2 }}>
+                  <CodeHighlight
+                    code={step2Code}
+                    language="jsx"
+                    theme="dark-plus"
+                    title="バリデーション追加"
+                  />
+                </Box>
                 <Box
                   sx={{
                     p: 2,
@@ -263,14 +308,14 @@ export default function RegisterBasicsPage() {
                 <Typography variant="body1" sx={{ mb: 2 }}>
                   errorsオブジェクトを使って、バリデーションエラーを表示します。
                 </Typography>
-                <Paper sx={{ p: 2, bgcolor: "grey.50", mb: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontFamily: "monospace", mb: 1 }}
-                  >
-                    {"{errors.lastName && <span>エラーメッセージ</span>}"}
-                  </Typography>
-                </Paper>
+                <Box sx={{ mb: 2 }}>
+                  <CodeHighlight
+                    code={step3Code}
+                    language="jsx"
+                    theme="dark-plus"
+                    title="エラーハンドリング"
+                  />
+                </Box>
                 <Box
                   sx={{
                     p: 2,
@@ -306,14 +351,14 @@ export default function RegisterBasicsPage() {
                 <Typography variant="body1" sx={{ mb: 2 }}>
                   handleSubmitと組み合わせて、完全なフォームを作成します。
                 </Typography>
-                <Paper sx={{ p: 2, bgcolor: "grey.50", mb: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontFamily: "monospace", mb: 1 }}
-                  >
-                    {"<form onSubmit={handleSubmit(onSubmit)}>"}
-                  </Typography>
-                </Paper>
+                <Box sx={{ mb: 2 }}>
+                  <CodeHighlight
+                    code={step4Code}
+                    language="jsx"
+                    theme="dark-plus"
+                    title="完全なフォーム"
+                  />
+                </Box>
                 <Box
                   sx={{
                     p: 2,
@@ -419,13 +464,11 @@ export default function RegisterBasicsPage() {
                   フィールドが必須であることを指定します。
                 </Typography>
               </Box>
-              <Paper sx={{ p: 2, bgcolor: "grey.50" }}>
-                <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
-                  {"register('fieldName', { required: true })"}
-                  <br />
-                  {"register('fieldName', { required: 'エラーメッセージ' })"}
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={requiredRuleCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </AccordionDetails>
           </Accordion>
 
@@ -445,21 +488,11 @@ export default function RegisterBasicsPage() {
                   入力値が指定した正規表現パターンに一致するかをチェックします。
                 </Typography>
               </Box>
-              <Paper sx={{ p: 2, bgcolor: "grey.50" }}>
-                <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
-                  {"register('email', {"}
-                  <br />
-                  {"  pattern: {"}
-                  <br />
-                  {"    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,"}
-                  <br />
-                  {"    message: 'メールアドレスの形式が正しくありません'"}
-                  <br />
-                  {"  }"}
-                  <br />
-                  {"})"}
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={patternRuleCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </AccordionDetails>
           </Accordion>
 
@@ -481,29 +514,11 @@ export default function RegisterBasicsPage() {
                   入力文字数の最小値・最大値を制限します。
                 </Typography>
               </Box>
-              <Paper sx={{ p: 2, bgcolor: "grey.50" }}>
-                <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
-                  {"register('password', {"}
-                  <br />
-                  {"  minLength: {"}
-                  <br />
-                  {"    value: 8,"}
-                  <br />
-                  {"    message: 'パスワードは8文字以上で入力してください'"}
-                  <br />
-                  {"  },"}
-                  <br />
-                  {"  maxLength: {"}
-                  <br />
-                  {"    value: 20,"}
-                  <br />
-                  {"    message: 'パスワードは20文字以下で入力してください'"}
-                  <br />
-                  {"  }"}
-                  <br />
-                  {"})"}
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={lengthRuleCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </AccordionDetails>
           </Accordion>
 
@@ -523,29 +538,11 @@ export default function RegisterBasicsPage() {
                   数値入力の最小値・最大値を制限します。
                 </Typography>
               </Box>
-              <Paper sx={{ p: 2, bgcolor: "grey.50" }}>
-                <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
-                  {"register('age', {"}
-                  <br />
-                  {"  min: {"}
-                  <br />
-                  {"    value: 18,"}
-                  <br />
-                  {"    message: '18歳以上である必要があります'"}
-                  <br />
-                  {"  },"}
-                  <br />
-                  {"  max: {"}
-                  <br />
-                  {"    value: 100,"}
-                  <br />
-                  {"    message: '100歳以下で入力してください'"}
-                  <br />
-                  {"  }"}
-                  <br />
-                  {"})"}
-                </Typography>
-              </Paper>
+              <CodeHighlight
+                code={numberRuleCode}
+                language="javascript"
+                theme="dark-plus"
+              />
             </AccordionDetails>
           </Accordion>
         </CardContent>
@@ -567,9 +564,13 @@ export default function RegisterBasicsPage() {
             <Typography variant="subtitle2" gutterBottom>
               ✅ registerの基本構文
             </Typography>
-            <Typography variant="body2">
-              {"<input {...register('fieldName', validationRules)} />"}
-            </Typography>
+            <Box sx={{ mt: 1 }}>
+              <CodeHighlight
+                code={basicSyntaxCode}
+                language="jsx"
+                theme="dark-plus"
+              />
+            </Box>
           </Alert>
 
           <Alert severity="warning" sx={{ mb: 2 }}>
