@@ -33,24 +33,118 @@ const steps = [
   "完全なフォーム",
 ];
 
-const traditionalReactCode = `const [name, setName] = useState("");
+const traditionalReactCode = `const [formData, setFormData] = useState({
+  firstName: '',
+  lastName: '',
+  email: ''
+});
 const [errors, setErrors] = useState({});
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+const validateField = (name, value) => {
+  const newErrors = { ...errors };
+
+  if (name === 'lastName' && !value.trim()) {
+    newErrors.lastName = '姓は必須です';
+  } else if (name === 'lastName') {
+    delete newErrors.lastName;
+  }
+
+  if (name === 'email') {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i;
+    if (!value.trim()) {
+      newErrors.email = 'メールアドレスは必須です';
+    } else if (!emailRegex.test(value)) {
+      newErrors.email = '正しいメールアドレスを入力してください';
+    } else {
+      delete newErrors.email;
+    }
+  }
+
+  setErrors(newErrors);
+};
 
 const handleChange = (e) => {
-  setName(e.target.value);
-  // バリデーションロジック...
-}
+  const { name, value } = e.target;
+  setFormData(prev => ({ ...prev, [name]: value }));
+  validateField(name, value);
+};
 
-<input
-  value={name}
-  onChange={handleChange}
-/>`;
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-const reactHookFormCode = `const { register } = useForm();
+  // 全フィールドのバリデーション
+  validateField('lastName', formData.lastName);
+  validateField('email', formData.email);
 
-// これだけ！ 🎉
+  if (Object.keys(errors).length === 0) {
+    // フォーム送信処理
+    console.log(formData);
+  }
+  setIsSubmitting(false);
+};
 
-<input {...register('name')} />`;
+return (
+  <form onSubmit={handleSubmit}>
+    <input
+      name="firstName"
+      value={formData.firstName}
+      onChange={handleChange}
+    />
+    <input
+      name="lastName"
+      value={formData.lastName}
+      onChange={handleChange}
+    />
+    {errors.lastName && <span>{errors.lastName}</span>}
+
+    <input
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+    />
+    {errors.email && <span>{errors.email}</span>}
+
+    <button type="submit" disabled={isSubmitting}>
+      送信
+    </button>
+  </form>
+);`;
+
+const reactHookFormCode = `const {
+  register,
+  handleSubmit,
+  formState: { errors, isSubmitting }
+} = useForm();
+
+const onSubmit = (data) => {
+  console.log(data);
+};
+
+return (
+  <form onSubmit={handleSubmit(onSubmit)}>
+    <input {...register('firstName')} />
+
+    <input {...register('lastName', {
+      required: '姓は必須です'
+    })} />
+    {errors.lastName && <span>{errors.lastName.message}</span>}
+
+    <input {...register('email', {
+      required: 'メールアドレスは必須です',
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,
+        message: '正しいメールアドレスを入力してください'
+      }
+    })} />
+    {errors.email && <span>{errors.email.message}</span>}
+
+    <button type="submit" disabled={isSubmitting}>
+      送信
+    </button>
+  </form>
+);`;
 
 // ステップコード例
 const step1Code = `<input {...register('firstName')} />`;
@@ -204,9 +298,15 @@ export default function RegisterBasicsPage() {
                 component="span"
                 sx={{ color: "#34d399", fontWeight: "bold" }}
               >
-                🚀 効果:
-              </Box>{" "}
-              コード量が約70%削減され、パフォーマンスも向上します！
+                🚀 圧倒的な効果:
+              </Box>
+              <br />• <strong>コード量:</strong> 約80行 → 30行（62%削減）
+              <br />• <strong>バリデーション:</strong> 手動実装 → 宣言的設定
+              <br />• <strong>エラー管理:</strong> 複雑なstate管理 → 自動処理
+              <br />• <strong>パフォーマンス:</strong> 不要な再レンダリング →
+              最適化済み
+              <br />• <strong>保守性:</strong> 分散したロジック →
+              集約されたコード
             </Typography>
           </Alert>
         </CardContent>
@@ -289,7 +389,7 @@ export default function RegisterBasicsPage() {
                 >
                   <TextField
                     {...register("lastName", { required: "姓は必須です" })}
-                    label="姓（Last Name）*"
+                    label="姓（Last Name）"
                     variant="outlined"
                     fullWidth
                     placeholder="太郎"
@@ -332,7 +432,7 @@ export default function RegisterBasicsPage() {
                         message: "正しいメールアドレスを入力してください",
                       },
                     })}
-                    label="メールアドレス*"
+                    label="メールアドレス"
                     variant="outlined"
                     fullWidth
                     placeholder="example@email.com"
@@ -382,7 +482,7 @@ export default function RegisterBasicsPage() {
                           {...register("lastName", {
                             required: "姓は必須です",
                           })}
-                          label="姓*"
+                          label="姓"
                           variant="outlined"
                           fullWidth
                           error={!!errors.lastName}
@@ -398,7 +498,7 @@ export default function RegisterBasicsPage() {
                               message: "正しいメールアドレスを入力してください",
                             },
                           })}
-                          label="メールアドレス*"
+                          label="メールアドレス"
                           variant="outlined"
                           fullWidth
                           error={!!errors.email}
