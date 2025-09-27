@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__check_onboarding_performed",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm dev:*)",
+      "mcp__inkeepMcp__ask-question-about-zod-v4",
+      "Bash(pnpm lint:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
