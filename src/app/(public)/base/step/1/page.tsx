@@ -2,31 +2,33 @@
 
 import { useState } from "react";
 
-import { useForm } from "react-hook-form";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Alert,
   Box,
+  Button,
   Card,
   CardContent,
-  Typography,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  TextField,
-  Alert,
-  Grid,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Chip,
   Container,
+  Grid,
+  Step,
+  StepLabel,
+  Stepper,
+  TextField,
+  Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CodeIcon from "@mui/icons-material/Code";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CodeIcon from "@mui/icons-material/Code";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useForm } from "react-hook-form";
+
 import { CodeHighlight } from "@/components/CodeHighlight";
-import VStack from "@/components/layout/v-stack";
 import HStack from "@/components/layout/h-stack";
+import Spacer from "@/components/layout/spacer";
+import VStack from "@/components/layout/v-stack";
 
 const steps = [
   "基本的なregister",
@@ -234,7 +236,7 @@ export default function RegisterBasicsPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* ページヘッダー */}
-      <VStack spacing={1} sx={{ mb: 4 }}>
+      <VStack spacing={1}>
         <Typography variant="h3" component="h1" gutterBottom>
           React Hook Form - register API の基本
         </Typography>
@@ -243,8 +245,10 @@ export default function RegisterBasicsPage() {
         </Typography>
       </VStack>
 
+      <Spacer size={32} />
+
       {/* 導入セクション */}
-      <Card sx={{ mb: 4 }}>
+      <Card>
         <CardContent>
           <Typography
             variant="h5"
@@ -314,8 +318,10 @@ export default function RegisterBasicsPage() {
         </CardContent>
       </Card>
 
+      <Spacer size={32} />
+
       {/* ステップバイステップ学習 */}
-      <Card sx={{ mb: 4 }}>
+      <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
             ステップバイステップで学習
@@ -534,8 +540,10 @@ export default function RegisterBasicsPage() {
         </CardContent>
       </Card>
 
+      <Spacer size={32} />
+
       {/* バリデーションルール詳細 */}
-      <Card sx={{ mb: 4 }}>
+      <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
             バリデーションルール一覧
@@ -648,6 +656,8 @@ export default function RegisterBasicsPage() {
           </Accordion>
         </CardContent>
       </Card>
+
+      <Spacer size={32} />
 
       {/* 重要なポイント */}
       <Card>
