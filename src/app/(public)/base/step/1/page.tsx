@@ -29,6 +29,7 @@ import { CodeHighlight } from "@/components/CodeHighlight";
 import HStack from "@/components/layout/h-stack";
 import Spacer from "@/components/layout/spacer";
 import VStack from "@/components/layout/v-stack";
+import RegisterBasicsQuiz from "@/components/quiz/RegisterBasicsQuiz";
 
 const steps = [
   "基本的なregister",
@@ -704,6 +705,11 @@ export default function RegisterBasicsPage() {
           </Alert>
         </CardContent>
       </Card>
+
+      <Spacer size={32} />
+
+      {/* クイズセクション */}
+      <RegisterBasicsQuiz />
     </Container>
   );
 }
