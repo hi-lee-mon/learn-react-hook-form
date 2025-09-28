@@ -13,6 +13,7 @@ import LessonSummary from "@/components/lesson/LessonSummary";
 import StepByStepLearning from "@/components/lesson/StepByStepLearning";
 import ApiReferenceSection from "@/components/lesson/ApiReferenceSection";
 import LessonNote from "@/components/lesson/LessonNote";
+import BackToBasicsButton from "@/components/lesson/BackToBasicsButton";
 import RegisterBasicsQuiz from "@/components/quiz/RegisterBasicsQuiz";
 
 // レッスンデータ
@@ -443,6 +444,9 @@ export default function RegisterBasicsPage() {
 
   return (
     <LessonLayout>
+      {/* 固定位置の戻るボタン */}
+      <BackToBasicsButton position="fixed" />
+
       {/* ページヘッダー */}
       <LessonPageHeader
         title={lessonData.header.title}
