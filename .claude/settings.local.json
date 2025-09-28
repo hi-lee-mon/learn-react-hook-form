@@ -11,7 +11,8 @@
       "mcp__serena__onboarding",
       "Bash(pnpm format:*)",
       "Bash(npx @biomejs/biome check:*)",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
