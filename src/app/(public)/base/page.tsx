@@ -1,17 +1,11 @@
-import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-} from "@mui/material";
-
 import CodeIcon from "@mui/icons-material/Code";
 import SchoolIcon from "@mui/icons-material/School";
+import { Card, CardContent, Container, Grid, Typography } from "@mui/material";
+
 import LinkButton from "@/components/LinkButton";
-import VStack from "@/components/layout/v-stack";
 import HStack from "@/components/layout/h-stack";
 import Spacer from "@/components/layout/spacer";
+import VStack from "@/components/layout/v-stack";
 
 export default function Page() {
   return (
@@ -38,7 +32,9 @@ export default function Page() {
           <Card
             sx={{ height: "100%", display: "flex", flexDirection: "column" }}
           >
-            <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+            <CardContent
+              sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+            >
               <HStack spacing={1}>
                 <CodeIcon color="primary" />
                 <Typography variant="h6" component="h2">
@@ -76,7 +72,9 @@ export default function Page() {
               opacity: 0.7,
             }}
           >
-            <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+            <CardContent
+              sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+            >
               <HStack spacing={1}>
                 <CodeIcon color="disabled" />
                 <Typography variant="h6" component="h2" color="text.secondary">
@@ -109,7 +107,9 @@ export default function Page() {
               opacity: 0.7,
             }}
           >
-            <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+            <CardContent
+              sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+            >
               <HStack spacing={1}>
                 <CodeIcon color="disabled" />
                 <Typography variant="h6" component="h2" color="text.secondary">

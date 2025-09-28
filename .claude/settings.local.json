@@ -7,7 +7,11 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm dev:*)",
       "mcp__inkeepMcp__ask-question-about-zod-v4",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "mcp__serena__onboarding",
+      "Bash(pnpm format:*)",
+      "Bash(npx @biomejs/biome check:*)",
+      "Bash(pnpm build:*)"
     ],
     "deny": [],
     "ask": []

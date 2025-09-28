@@ -1,21 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import {
+  Alert,
+  Box,
+  Button,
   Card,
   CardContent,
-  Typography,
-  Button,
   LinearProgress,
-  Box,
-  Alert,
+  Typography,
 } from "@mui/material";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 import QuizCard from "./QuizCard";
-import VStack from "@/components/layout/v-stack";
+
 import HStack from "@/components/layout/h-stack";
-import Spacer from "@/components/layout/spacer";
+import VStack from "@/components/layout/v-stack";
 
 const quizQuestions = [
   {
