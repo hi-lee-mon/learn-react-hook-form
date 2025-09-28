@@ -13,13 +13,21 @@ export default function Layout({ children }: LayoutProps<"/">) {
           Learn React Hook Form
         </LinkButton>
         <nav>
-          <ul>
+          <ul className="flex space-x-4">
             <li>
               <LinkButton
                 href="/base"
                 sx={{ textDecoration: "underline", fontWeight: "bold" }}
               >
                 基礎
+              </LinkButton>
+            </li>
+            <li>
+              <LinkButton
+                href="/patterns"
+                sx={{ textDecoration: "underline", fontWeight: "bold" }}
+              >
+                実装パターン
               </LinkButton>
             </li>
           </ul>
