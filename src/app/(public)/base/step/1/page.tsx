@@ -6,14 +6,14 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import { CodeHighlight } from "@/components/CodeHighlight";
 import Spacer from "@/components/layout/spacer";
 import VStack from "@/components/layout/v-stack";
+import ApiReferenceSection from "@/components/lesson/ApiReferenceSection";
+import BackToBasicsButton from "@/components/lesson/BackToBasicsButton";
 import LessonIntroSection from "@/components/lesson/LessonIntroSection";
 import LessonLayout from "@/components/lesson/LessonLayout";
+import LessonNote from "@/components/lesson/LessonNote";
 import LessonPageHeader from "@/components/lesson/LessonPageHeader";
 import LessonSummary from "@/components/lesson/LessonSummary";
 import StepByStepLearning from "@/components/lesson/StepByStepLearning";
-import ApiReferenceSection from "@/components/lesson/ApiReferenceSection";
-import LessonNote from "@/components/lesson/LessonNote";
-import BackToBasicsButton from "@/components/lesson/BackToBasicsButton";
 import RegisterBasicsQuiz from "@/components/quiz/RegisterBasicsQuiz";
 
 // レッスンデータ

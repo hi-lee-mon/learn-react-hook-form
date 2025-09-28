@@ -1,5 +1,5 @@
-import { Alert, AlertColor, Box, Typography } from "@mui/material";
-import { Lightbulb, Star, Warning, Close, MenuBook } from "@mui/icons-material";
+import { Close, Lightbulb, MenuBook, Star, Warning } from "@mui/icons-material";
+import { Alert, type AlertColor, Box, Typography } from "@mui/material";
 
 export type LessonNoteType =
   | "tip"
