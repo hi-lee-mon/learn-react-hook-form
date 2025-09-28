@@ -1,23 +1,24 @@
 "use client";
 
-import {
-  Container,
-  Paper,
-  Typography,
-  Box,
-  Alert,
-  Button,
-  Grid,
-  Autocomplete,
-  TextField,
-  Chip,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import {
+  Alert,
+  Autocomplete,
+  Box,
+  Button,
+  Chip,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 
+import { CodeHighlight } from "@/components/CodeHighlight";
 import PageHeader from "@/components/base/page-header";
-import Spacer from "@/components/layout/spacer";
 import BackButton from "@/components/layout/back-button";
+import Spacer from "@/components/layout/spacer";
 
 interface Country {
   code: string;
@@ -79,19 +80,15 @@ export default function AutocompletePatternPage() {
   const [submittedData, setSubmittedData] =
     useState<AutocompleteFormData | null>(null);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm<AutocompleteFormData>({
-    defaultValues: {
-      country: null,
-      skills: [],
-      language: null,
+  const { control, handleSubmit, watch, reset } = useForm<AutocompleteFormData>(
+    {
+      defaultValues: {
+        country: null,
+        skills: [],
+        language: null,
+      },
     },
-  });
+  );
 
   const watchedValues = watch();
 
@@ -263,6 +260,130 @@ export default function AutocompletePatternPage() {
       </Grid>
 
       <Spacer size={40} />
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          実装コード例
+        </Typography>
+
+        <Typography variant="subtitle1" gutterBottom>
+          1. 型定義
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`interface Country {
+  code: string;
+  label: string;
+  phone: string;
+}
+
+interface AutocompleteFormData {
+  country: Country | null;
+  skills: string[];
+  language: string | null;
+}`}
+            language="typescript"
+            title="型定義"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          2. 単一選択（オブジェクト型）
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<Controller
+  name="country"
+  control={control}
+  rules={{ required: "国を選択してください" }}
+  render={({ field: { onChange, value }, fieldState: { error } }) => (
+    <Autocomplete
+      value={value}
+      onChange={(_, newValue) => onChange(newValue)}
+      options={countries}
+      getOptionLabel={(option) => option.label}
+      isOptionEqualToValue={(option, value) => option.code === value.code}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          error={!!error}
+          helperText={error?.message}
+          placeholder="国を選択してください"
+        />
+      )}
+    />
+  )}
+/>`}
+            language="tsx"
+            title="単一選択（オブジェクト型）"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          3. 複数選択（文字列配列）
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<Controller
+  name="skills"
+  control={control}
+  render={({ field: { onChange, value } }) => (
+    <Autocomplete
+      multiple
+      value={value}
+      onChange={(_, newValue) => onChange(newValue)}
+      options={skillsOptions}
+      renderInput={(params) => (
+        <TextField {...params} placeholder="スキルを選択してください" />
+      )}
+      renderTags={(value, getTagProps) =>
+        value.map((option, index) => (
+          <Chip
+            variant="outlined"
+            label={option}
+            {...getTagProps({ index })}
+            key={option}
+          />
+        ))
+      }
+      limitTags={3}
+    />
+  )}
+/>`}
+            language="tsx"
+            title="複数選択（文字列配列）"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          4. フリー入力対応
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<Controller
+  name="language"
+  control={control}
+  render={({ field: { onChange, value } }) => (
+    <Autocomplete
+      freeSolo
+      value={value || ''}
+      onChange={(_, newValue) => onChange(newValue)}
+      onInputChange={(_, newInputValue) => onChange(newInputValue)}
+      options={languages}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder="言語を入力または選択してください"
+        />
+      )}
+    />
+  )}
+/>`}
+            language="tsx"
+            title="フリー入力対応"
+          />
+        </Box>
+      </Paper>
 
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>

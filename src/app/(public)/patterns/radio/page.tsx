@@ -1,25 +1,26 @@
 "use client";
 
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
+  Alert,
+  Box,
+  Button,
   Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
   Paper,
-  Typography,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Box,
-  Alert,
-  Button,
-  Grid,
+  Typography,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
 
+import { CodeHighlight } from "@/components/CodeHighlight";
 import PageHeader from "@/components/base/page-header";
-import Spacer from "@/components/layout/spacer";
 import BackButton from "@/components/layout/back-button";
+import Spacer from "@/components/layout/spacer";
 
 interface RadioFormData {
   gender: string;
@@ -201,6 +202,102 @@ export default function RadioPatternPage() {
       </Grid>
 
       <Spacer size={40} />
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          実装コード例
+        </Typography>
+
+        <Typography variant="subtitle1" gutterBottom>
+          1. 型定義
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`interface RadioFormData {
+  gender: string;
+  subscription: string;
+  theme: string;
+}`}
+            language="typescript"
+            title="型定義"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          2. useFormの設定
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`const { control, handleSubmit, formState: { errors }, watch, reset } =
+  useForm<RadioFormData>({
+    defaultValues: {
+      gender: "",
+      subscription: "",
+      theme: "light", // デフォルト値を設定
+    },
+  });`}
+            language="typescript"
+            title="useFormの設定"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          3. Controllerを使った実装
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<FormControl component="fieldset" error={!!errors.gender}>
+  <FormLabel component="legend">性別 *</FormLabel>
+  <Controller
+    name="gender"
+    control={control}
+    rules={{ required: "性別を選択してください" }}
+    render={({ field }) => (
+      <RadioGroup {...field}>
+        <FormControlLabel
+          value="male"
+          control={<Radio />}
+          label="男性"
+        />
+        <FormControlLabel
+          value="female"
+          control={<Radio />}
+          label="女性"
+        />
+        <FormControlLabel
+          value="other"
+          control={<Radio />}
+          label="その他"
+        />
+      </RadioGroup>
+    )}
+  />
+  {errors.gender && (
+    <Typography color="error" variant="caption">
+      {errors.gender.message}
+    </Typography>
+  )}
+</FormControl>`}
+            language="tsx"
+            title="Controllerを使った実装"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          4. 水平配置の場合
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<RadioGroup {...field} row>
+  <FormControlLabel value="light" control={<Radio />} label="ライト" />
+  <FormControlLabel value="dark" control={<Radio />} label="ダーク" />
+  <FormControlLabel value="auto" control={<Radio />} label="自動" />
+</RadioGroup>`}
+            language="tsx"
+            title="水平配置の場合"
+          />
+        </Box>
+      </Paper>
 
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>

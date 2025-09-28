@@ -1,34 +1,35 @@
 "use client";
 
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
-  Container,
-  Paper,
-  Typography,
-  Box,
   Alert,
+  Box,
   Button,
-  Grid,
-  TextField,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Select,
-  MenuItem,
-  InputLabel,
-  Checkbox,
-  FormGroup,
-  Collapse,
   Card,
   CardContent,
+  Checkbox,
+  Collapse,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
 
+import { CodeHighlight } from "@/components/CodeHighlight";
 import PageHeader from "@/components/base/page-header";
-import Spacer from "@/components/layout/spacer";
 import BackButton from "@/components/layout/back-button";
+import Spacer from "@/components/layout/spacer";
 
 interface ConditionalFormData {
   accountType: "personal" | "business" | "";
@@ -149,7 +150,9 @@ export default function ConditionalPatternPage() {
                       <RadioGroup
                         {...field}
                         onChange={(e) =>
-                          handleAccountTypeChange(e.target.value as any)
+                          handleAccountTypeChange(
+                            e.target.value as "personal" | "business" | "",
+                          )
                         }
                       >
                         <FormControlLabel
@@ -564,6 +567,124 @@ export default function ConditionalPatternPage() {
       </Grid>
 
       <Spacer size={40} />
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          実装コード例
+        </Typography>
+
+        <Typography variant="subtitle1" gutterBottom>
+          1. watchを使った値の監視
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`const {
+  control,
+  handleSubmit,
+  watch,
+  setValue,
+} = useForm<ConditionalFormData>({
+  defaultValues: {
+    accountType: "",
+    hasExperience: false,
+    subscriptionPlan: "",
+    newsletter: false,
+  },
+});
+
+// 特定のフィールドを監視
+const accountType = watch("accountType");
+const hasExperience = watch("hasExperience");
+const subscriptionPlan = watch("subscriptionPlan");`}
+            language="typescript"
+            title="watchを使った値の監視"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          2. 条件付き表示
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`{/* 法人情報の表示 */}
+<Collapse in={accountType === "business"}>
+  <Card sx={{ mb: 3, bgcolor: "action.hover" }}>
+    <CardContent>
+      <Typography variant="subtitle1" gutterBottom>
+        法人情報
+      </Typography>
+      <Controller
+        name="businessName"
+        control={control}
+        rules={
+          accountType === "business"
+            ? { required: "会社名は必須です" }
+            : {}
+        }
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            {...field}
+            label="会社名"
+            fullWidth
+            error={!!error}
+            helperText={error?.message}
+          />
+        )}
+      />
+    </CardContent>
+  </Card>
+</Collapse>`}
+            language="tsx"
+            title="条件付き表示"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          3. 値変更時のフィールドクリア
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`const handleAccountTypeChange = (value: "personal" | "business" | "") => {
+  setValue("accountType", value);
+
+  // アカウントタイプが変わったら関連フィールドをクリア
+  if (value !== "business") {
+    setValue("businessName", undefined);
+    setValue("businessType", undefined);
+    setValue("taxId", undefined);
+    setValue("employeeCount", undefined);
+  }
+  if (value !== "personal") {
+    setValue("personalName", undefined);
+    setValue("age", undefined);
+  }
+};
+
+// RadioGroupでカスタムonChangeを使用
+<RadioGroup
+  {...field}
+  onChange={(e) =>
+    handleAccountTypeChange(
+      e.target.value as "personal" | "business" | "",
+    )
+  }
+>
+  <FormControlLabel
+    value="personal"
+    control={<Radio />}
+    label="個人アカウント"
+  />
+  <FormControlLabel
+    value="business"
+    control={<Radio />}
+    label="法人アカウント"
+  />
+</RadioGroup>`}
+            language="tsx"
+            title="値変更時のフィールドクリア"
+          />
+        </Box>
+      </Paper>
 
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>

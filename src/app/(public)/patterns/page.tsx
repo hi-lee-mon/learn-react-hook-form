@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
 
 import PageHeader from "@/components/base/page-header";
-import PatternList from "@/components/patterns/pattern-list";
 import Spacer from "@/components/layout/spacer";
+import PatternList from "@/components/patterns/pattern-list";
 import { patterns } from "@/data/patterns";
 
 export default function Page() {

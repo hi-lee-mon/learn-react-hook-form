@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography, Chip } from "@mui/material";
+import { Card, CardContent, Chip, Grid, Typography } from "@mui/material";
 
 import LinkButton from "@/components/LinkButton";
 import HStack from "@/components/layout/h-stack";

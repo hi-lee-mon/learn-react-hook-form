@@ -1,27 +1,28 @@
 "use client";
 
-import {
-  Container,
-  Paper,
-  Typography,
-  Box,
-  Alert,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  OutlinedInput,
-  Chip,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Container,
+  FormControl,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Paper,
+  Select,
+  Typography,
+} from "@mui/material";
 
+import { CodeHighlight } from "@/components/CodeHighlight";
 import PageHeader from "@/components/base/page-header";
-import Spacer from "@/components/layout/spacer";
 import BackButton from "@/components/layout/back-button";
+import Spacer from "@/components/layout/spacer";
 
 interface SelectFormData {
   category: string;
@@ -252,6 +253,110 @@ export default function SelectPatternPage() {
       </Grid>
 
       <Spacer size={40} />
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          実装コード例
+        </Typography>
+
+        <Typography variant="subtitle1" gutterBottom>
+          1. 基本的なSelect
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<FormControl fullWidth error={!!errors.category}>
+  <InputLabel>カテゴリ *</InputLabel>
+  <Controller
+    name="category"
+    control={control}
+    rules={{ required: "カテゴリを選択してください" }}
+    render={({ field }) => (
+      <Select {...field} label="カテゴリ *">
+        {categories.map((category) => (
+          <MenuItem key={category.value} value={category.value}>
+            {category.label}
+          </MenuItem>
+        ))}
+      </Select>
+    )}
+  />
+  {errors.category && (
+    <FormHelperText>{errors.category.message}</FormHelperText>
+  )}
+</FormControl>`}
+            language="tsx"
+            title="基本的なSelect"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          2. カスタム表示のSelect
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<Controller
+  name="priority"
+  control={control}
+  render={({ field }) => (
+    <Select {...field} label="優先度">
+      {priorities.map((priority) => (
+        <MenuItem key={priority.value} value={priority.value}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                backgroundColor: priority.color,
+                mr: 1,
+              }}
+            />
+            {priority.label}
+          </Box>
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+/>`}
+            language="tsx"
+            title="カスタム表示のSelect"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          3. 複数選択のSelect
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`<Controller
+  name="tags"
+  control={control}
+  render={({ field }) => (
+    <Select
+      {...field}
+      multiple
+      input={<OutlinedInput label="タグ（複数選択）" />}
+      renderValue={(selected) => (
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+          {selected.map((value) => (
+            <Chip key={value} label={value} size="small" />
+          ))}
+        </Box>
+      )}
+    >
+      {tagOptions.map((tag) => (
+        <MenuItem key={tag} value={tag}>
+          {tag}
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+/>`}
+            language="tsx"
+            title="複数選択のSelect"
+          />
+        </Box>
+      </Paper>
 
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>

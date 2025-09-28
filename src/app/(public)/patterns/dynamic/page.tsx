@@ -1,26 +1,27 @@
 "use client";
 
+import { useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Add, Delete } from "@mui/icons-material";
 import {
-  Container,
-  Paper,
-  Typography,
-  Box,
   Alert,
+  Box,
   Button,
-  Grid,
-  TextField,
-  IconButton,
   Card,
   CardContent,
+  Container,
   Divider,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { Add, Delete } from "@mui/icons-material";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { useState } from "react";
 
+import { CodeHighlight } from "@/components/CodeHighlight";
 import PageHeader from "@/components/base/page-header";
-import Spacer from "@/components/layout/spacer";
 import BackButton from "@/components/layout/back-button";
+import Spacer from "@/components/layout/spacer";
 
 interface Todo {
   title: string;
@@ -45,13 +46,7 @@ export default function DynamicPatternPage() {
     null,
   );
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm<DynamicFormData>({
+  const { control, handleSubmit, watch, reset } = useForm<DynamicFormData>({
     defaultValues: {
       projectName: "",
       todos: [{ title: "", description: "", estimatedHours: 1 }],
@@ -352,6 +347,114 @@ export default function DynamicPatternPage() {
       </Grid>
 
       <Spacer size={40} />
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          実装コード例
+        </Typography>
+
+        <Typography variant="subtitle1" gutterBottom>
+          1. useFieldArrayの設定
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`import { useForm, useFieldArray, Controller } from "react-hook-form";
+
+const { control, handleSubmit, watch, reset } = useForm<DynamicFormData>({
+  defaultValues: {
+    projectName: "",
+    todos: [{ title: "", description: "", estimatedHours: 1 }],
+    teamMembers: [{ name: "", role: "", email: "" }],
+  },
+});
+
+const {
+  fields: todoFields,
+  append: appendTodo,
+  remove: removeTodo,
+} = useFieldArray({
+  control,
+  name: "todos",
+});`}
+            language="typescript"
+            title="useFieldArrayの設定"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          2. 動的フィールドの表示
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`{todoFields.map((field, index) => (
+  <Card key={field.id} sx={{ mb: 2 }}>
+    <CardContent>
+      <Box sx={{ display: "flex", alignItems: "start", gap: 2 }}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Controller
+            name={\`todos.\${index}.title\`}
+            control={control}
+            rules={{ required: "タイトルは必須です" }}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                label={\`TODO \${index + 1} タイトル\`}
+                fullWidth
+                size="small"
+                error={!!error}
+                helperText={error?.message}
+              />
+            )}
+          />
+        </Box>
+        <IconButton
+          onClick={() => removeTodo(index)}
+          disabled={todoFields.length === 1}
+          color="error"
+        >
+          <Delete />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+))}`}
+            language="tsx"
+            title="動的フィールドの表示"
+          />
+        </Box>
+
+        <Typography variant="subtitle1" gutterBottom>
+          3. 項目の追加・削除
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <CodeHighlight
+            code={`const addTodo = () => {
+  appendTodo({ title: "", description: "", estimatedHours: 1 });
+};
+
+// 追加ボタン
+<Button
+  onClick={addTodo}
+  startIcon={<Add />}
+  variant="outlined"
+  size="small"
+>
+  TODO を追加
+</Button>
+
+// 削除は各項目のIconButtonで実行
+<IconButton
+  onClick={() => removeTodo(index)}
+  disabled={todoFields.length === 1}  // 最低1件は残す
+  color="error"
+>
+  <Delete />
+</IconButton>`}
+            language="tsx"
+            title="項目の追加・削除"
+          />
+        </Box>
+      </Paper>
 
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
