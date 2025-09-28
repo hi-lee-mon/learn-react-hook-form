@@ -12,6 +12,7 @@ import LessonPageHeader from "@/components/lesson/LessonPageHeader";
 import LessonSummary from "@/components/lesson/LessonSummary";
 import StepByStepLearning from "@/components/lesson/StepByStepLearning";
 import ApiReferenceSection from "@/components/lesson/ApiReferenceSection";
+import LessonNote from "@/components/lesson/LessonNote";
 import RegisterBasicsQuiz from "@/components/quiz/RegisterBasicsQuiz";
 
 // レッスンデータ
@@ -362,6 +363,17 @@ export default function RegisterBasicsPage() {
             theme="dark-plus"
             title="完全なフォーム"
           />
+          <LessonNote type="important">
+            handleSubmitは、React Hook
+            Formが提供する重要な関数です。フォーム送信時に自動的にバリデーションを実行し、エラーがなければonSubmit関数を呼び出します。
+          </LessonNote>
+          <LessonNote type="info">
+            handleSubmit(onSubmit)の仕組み：
+            <br />• フォーム送信時にevent.preventDefault()を自動実行
+            <br />• 全フィールドのバリデーションを実行
+            <br />• エラーがある場合は送信を停止し、errorsオブジェクトを更新
+            <br />• エラーがない場合のみonSubmit関数にフォームデータを渡して実行
+          </LessonNote>
           <Box
             sx={{
               p: 2,
@@ -421,6 +433,9 @@ export default function RegisterBasicsPage() {
               </Grid>
             </form>
           </Box>
+          <LessonNote type="tip">
+            実際に試してみましょう！必須フィールドを空にして送信ボタンを押すと、バリデーションエラーが表示され、送信が停止されます。全て正しく入力すると、アラートでフォームデータが表示されます。
+          </LessonNote>
         </VStack>
       ),
     },
